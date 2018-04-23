@@ -1,0 +1,57 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApplication25"
+        xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+        xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+        xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+        x:Class="WpfApplication25.MainWindow"
+        mc:Ignorable="d"
+        Title="How to use scrollbar annotations" Height="350" Width="525">
+    <Window.DataContext>
+        <local:ViewModel></local:ViewModel>  
+    </Window.DataContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition Width="150"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <dxg:GridControl x:Name="myGrid" AutoGenerateColumns="AddNew" EnableSmartColumnsGeneration="True" ItemsSource="{Binding List}" AllowLiveDataShaping ="True" SelectionMode="Cell" Grid.RowSpan="2">
+            <dxg:GridControl.View>
+                <dxg:TableView x:Name="myView" AllowPerPixelScrolling="True" ShowSearchPanelMode="Always" ScrollBarAnnotationMode="{Binding EditValue, ElementName= myListBoxEdit, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay }" ScrollBarCustomRowAnnotation ="MyScrollBarCustomRowAnnotationEventHandler" SearchPanelAllowFilter="False" Loaded="MyLoadedEventHandler">
+                    <dxg:TableView.FormatConditions>
+                        <dxg:FormatCondition Expression="[Number] &gt; 2.0m and [Number] &lt; 4.0m" FieldName="Number" ApplyToRow="True">
+                            <dx:Format Background="Green"/>
+                        </dxg:FormatCondition>
+                        <dxg:FormatCondition Expression="[Number] &gt; 10.0m and [Number] &lt; 15.0m" FieldName="Number" ApplyToRow="True">
+                            <dx:Format Background="LightCoral" />
+                        </dxg:FormatCondition>
+
+                    </dxg:TableView.FormatConditions>
+                </dxg:TableView>
+            </dxg:GridControl.View>
+        </dxg:GridControl>
+        <dxe:ListBoxEdit x:Name="myListBoxEdit" Grid.Column="1" Grid.Row="1" SelectedIndex="6">
+            <dxmvvm:Interaction.Behaviors>
+                <dxmvvm:EnumItemsSourceBehavior EnumType="{x:Type dxg:ScrollBarAnnotationMode}" SortMode="DisplayName"/>
+            </dxmvvm:Interaction.Behaviors>
+            <dxe:ListBoxEdit.StyleSettings>
+                <dxe:RadioListBoxEditStyleSettings/>
+            </dxe:ListBoxEdit.StyleSettings>
+            <dxe:ListBoxEdit.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Name}"/>
+                </DataTemplate>
+            </dxe:ListBoxEdit.ItemTemplate>
+        </dxe:ListBoxEdit>
+        <TextBlock Text="Choose the required mode:" Grid.Column="1" Grid.Row="0" Margin="3,0,0,0"></TextBlock>
+    </Grid>
+</Window>
