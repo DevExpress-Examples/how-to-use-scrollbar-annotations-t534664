@@ -11,7 +11,7 @@
 * [MainWindow.xaml.cs](./CS/WpfApplication25/MainWindow.xaml.cs) (VB: [MainWindow.xaml.vb](./VB/WpfApplication25/MainWindow.xaml.vb))
 * [ViewModel.cs](./CS/WpfApplication25/ViewModel.cs) (VB: [ViewModel.vb](./VB/WpfApplication25/ViewModel.vb))
 <!-- default file list end -->
-# How to use Scrollbar Annotations
+# WPF Grid - Display scrollbar annotations
 
 
 <p>This example demonstrates how to use <a href="https://documentation.devexpress.com/WPF/18068/Controls-and-Libraries/Data-Grid/Data-Scrolling/Scrollbar-Annotations">Scrollbar Annotations</a> with GridControl. Here you can learn how to use built-in annotations types and also how to create your own custom annotations.</p>
