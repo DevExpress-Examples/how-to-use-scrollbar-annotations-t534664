@@ -1,15 +1,11 @@
-﻿Imports DevExpress.XtraEditors.DXErrorProvider
-Imports System
-Imports System.Collections.Generic
 Imports System.Collections.ObjectModel
 Imports System.ComponentModel
-Imports System.Linq
-Imports System.Text
-Imports System.Threading.Tasks
 
 Namespace WpfApplication25
+
     Public Class ViewModel
-        Public Property List() As ObservableCollection(Of TestData)
+
+        Public Property List As ObservableCollection(Of TestData)
 
         Public Sub New()
             List = New ObservableCollection(Of TestData)()
@@ -17,57 +13,53 @@ Namespace WpfApplication25
         End Sub
 
         Private Sub PopulateData()
-            For i As Integer = 0 To 29
+            For i As Integer = 0 To 30 - 1
                 Dim t = New TestData(i, "Element" & i.ToString())
                 List.Add(t)
-            Next i
+            Next
         End Sub
     End Class
 
     Public Class TestData
         Implements INotifyPropertyChanged, IDataErrorInfo
 
+        Private numberField As Integer
 
-        Private number_Renamed As Integer
-
-        Private text_Renamed As String
+        Private textField As String
 
         Public Sub New(ByVal number As Integer, ByVal text As String)
-            Me.number_Renamed = number
-            Me.text_Renamed = text
+            numberField = number
+            textField = text
         End Sub
 
-        Public Property Number() As Integer
+        Public Property Number As Integer
             Get
-                Return number_Renamed
+                Return numberField
             End Get
+
             Set(ByVal value As Integer)
-                If number_Renamed = value Then
-                    Return
-                End If
-                number_Renamed = value
+                If numberField = value Then Return
+                numberField = value
                 NotifyChanged("Number")
             End Set
         End Property
-        Public Property Text() As String
+
+        Public Property Text As String
             Get
-                Return text_Renamed
+                Return textField
             End Get
+
             Set(ByVal value As String)
-                If text_Renamed = value Then
-                    Return
-                End If
-                text_Renamed = value
+                If Equals(textField, value) Then Return
+                textField = value
                 NotifyChanged("Text")
             End Set
         End Property
 
-        Public ReadOnly Property [Error]() As String Implements IDataErrorInfo.Error
+        Public ReadOnly Property [Error] As String Implements IDataErrorInfo.[Error]
             Get
                 Dim result As String = String.Empty
-                If Number >= 10 AndAlso Number < 20 Then
-                    result = "Incorrect value!"
-                End If
+                If Number >= 10 AndAlso Number < 20 Then result = "Incorrect value!"
                 Return result
             End Get
         End Property
@@ -77,10 +69,9 @@ Namespace WpfApplication25
                 Dim result As String = String.Empty
                 Select Case columnName
                     Case "Number"
-                        If Number > 20 AndAlso Number <= 40 Then
-                            result = String.Format("The current number is less than {0} !", Number.ToString())
-                        End If
+                        If Number > 20 AndAlso Number <= 40 Then result = String.Format("The current number is less than {0} !", Number.ToString())
                 End Select
+
                 Return result
             End Get
         End Property
@@ -89,8 +80,8 @@ Namespace WpfApplication25
             RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs(propertyName))
         End Sub
 
-        #Region "INotifyPropertyChanged Members"
+#Region "INotifyPropertyChanged Members"
         Public Event PropertyChanged As PropertyChangedEventHandler Implements INotifyPropertyChanged.PropertyChanged
-        #End Region
+#End Region
     End Class
 End Namespace
