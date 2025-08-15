@@ -7,44 +7,40 @@
 
 # WPF Grid – Display Scrollbar Annotations
 
-This example adds scrollbar annotations to a DevExpress WPF [`GridControl`](https://docs.devexpress.com/WPF/DevExpress.Xpf.Grid.GridControl). Annotations help users find important information faster (for example, search hits, validation issues, selected ranges, and user‑defined markers on the scrollbar).
+This example introduces [Scrollbar Annotations](https://docs.devexpress.com/WPF/18068/controls-and-libraries/data-grid/paging-and-scrolling/scrollbar-annotations) in the WPF [`GridControl`](https://docs.devexpress.com/WPF/DevExpress.Xpf.Grid.GridControl). When the grid loads, its vertical scrollbar displays annotations that indicate the location of search results and selected cells. These visual markers allow users to quickly navigate to relevant data.
 
 ![Display Scrollbar Annotations](./Images/annotation-scrollbar.jpg)
 
 ## Implementation Details
 
-### Built-in Annotations
+The example displays a side panel that lists annotation modes supported by the `GridControl`. When a user selects a mode, the bound [ScrollBarAnnotationMode](https://docs.devexpress.com/WPF/DevExpress.Xpf.Grid.TableView.ScrollBarAnnotationMode) property updates accordingly:
 
-When the grid loads, search results and selected cells appear as markers on the scrollbar. Users can immediately see where matches and selections are located, even if they are outside the visible area.
+```xaml
+<dxg:TableView x:Name="myView"  
+               ScrollBarAnnotationMode="{Binding EditValue, ElementName=myListBoxEdit, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+               ScrollBarCustomRowAnnotation="MyScrollBarCustomRowAnnotationEventHandler" />
+```
 
-The example configures the following:
+The `GridControl` can display annotations for the following items:
 
-* a search string: `view.SearchString = "Element2"`
-* a selected range: `view.SelectCells(15, view.Grid.Columns[0], 25, view.Grid.Columns[1])`
+* Focused and selected rows
+* Invalid rows and cells
+* Search results
 
-### User‑Defined Annotations
-
-The example adds custom markers to the scrollbar for specific rows:
-
-* Light-coral marker for rows with `Number` between 10 and 15.
-
-* Green marker for rows with `Number` between 2 and 4.
-
-Custom markers use [`ScrollBarAnnotationInfo`](https://docs.devexpress.com/WPF/DevExpress.Xpf.Grid.ScrollBarAnnotationInfo) class properties to set alignment, color, width, and height:
-
+To define additional annotations based on custom rules, handle the [`ScrollBarCustomRowAnnotation`](https://docs.devexpress.com/WPF/DevExpress.Xpf.Grid.TableView.ScrollBarCustomRowAnnotation) event. In this example, the event handler checks the `Number` property of a row’s data object and displays a custom annotation if the value falls within certain ranges:
+ 
 ```csharp
-private void MyScrollBarCustomRowAnnotationEventHandler(object sender, ScrollBarCustomRowAnnotationEventArgs e) {
-    var data = e.Row as TestData;
-    if (data == null) return;
-
-    if (data.Number > 10 && data.Number < 15)
+void MyScrollBarCustomRowAnnotationEventHandler(object sender, ScrollBarCustomRowAnnotationEventArgs e) {
+    if (e.Row is not TestData data) return;
+    int number = data.Number;
+    if (number > 10 && number < 15)
         ShowCustomScrollAnnotation(e, Brushes.LightCoral);
-    if (data.Number > 2 && data.Number < 4)
+    if (number > 2 && number < 4)
         ShowCustomScrollAnnotation(e, Brushes.Green);
 }
 
-private void ShowCustomScrollAnnotation(ScrollBarCustomRowAnnotationEventArgs e, SolidColorBrush brush) {
-    e.ScrollBarAnnotationInfo = new ScrollBarAnnotationInfo {
+void ShowCustomScrollAnnotation(ScrollBarCustomRowAnnotationEventArgs e, SolidColorBrush brush) {
+    e.ScrollBarAnnotationInfo = new ScrollBarAnnotationInfo() {
         Alignment = ScrollBarAnnotationAlignment.Right,
         Brush = brush,
         MinHeight = 3,
@@ -56,8 +52,8 @@ private void ShowCustomScrollAnnotation(ScrollBarCustomRowAnnotationEventArgs e,
 ## Files to Review
 
 * [MainWindow.xaml](./CS/WpfApplication25/MainWindow.xaml) (VB: [MainWindow.xaml](./VB/WpfApplication25/MainWindow.xaml))
-* [MainWindow.xaml.cs](./CS/WpfApplication25/MainWindow.xaml.cs) (VB: [MainWindow.xaml.vb](./VB/WpfApplication25/MainWindow.xaml.vb))&#x20;
-* [ViewModel.cs](./CS/WpfApplication25/ViewModel.cs) (VB: [ViewModel.vb](./VB/WpfApplication25/ViewModel.vb))&#x20;
+* [MainWindow.xaml.cs](./CS/WpfApplication25/MainWindow.xaml.cs) (VB: [MainWindow.xaml.vb](./VB/WpfApplication25/MainWindow.xaml.vb))
+* [ViewModel.cs](./CS/WpfApplication25/ViewModel.cs) (VB: [ViewModel.vb](./VB/WpfApplication25/ViewModel.vb))
 
 ## Documentation
 
@@ -72,7 +68,6 @@ private void ShowCustomScrollAnnotation(ScrollBarCustomRowAnnotationEventArgs e,
 * [WPF Data Grid – Specify Custom Content for Column Chooser Headers](https://github.com/DevExpress-Examples/wpf-data-grid-custom-content-for-column-chooser-headers)
 * [WPF Data Grid – Handle Drag and Drop Operations](https://github.com/DevExpress-Examples/wpf-grid-handle-drag-and-drop)
 * [WPF Data Grid – Bind to Dynamic Data](https://github.com/DevExpress-Examples/wpf-bind-gridcontrol-to-dynamic-data)
-
 
 <!-- feedback -->
 ## Does this example address your development requirements/objectives?
