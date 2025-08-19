@@ -69,12 +69,6 @@ void ShowCustomScrollAnnotation(ScrollBarCustomRowAnnotationEventArgs e, SolidCo
 * [WPF Data Grid – Handle Drag and Drop Operations](https://github.com/DevExpress-Examples/wpf-grid-handle-drag-and-drop)
 * [WPF Data Grid – Bind to Dynamic Data](https://github.com/DevExpress-Examples/wpf-bind-gridcontrol-to-dynamic-data)
 
-## Does this example address your development requirements/objectives?
-
-[<img src="https://www.devexpress.com/support/examples/i/yes-button.svg"/>](https://www.devexpress.com/support/examples/survey.xml?utm_source=github&utm_campaign=wpf-grid-scrollbar-annotations&~~~was_helpful=yes) [<img src="https://www.devexpress.com/support/examples/i/no-button.svg"/>](https://www.devexpress.com/support/examples/survey.xml?utm_source=github&utm_campaign=wpf-grid-scrollbar-annotations&~~~was_helpful=no)
-
-(you will be redirected to DevExpress.com to submit your response)
-<!-- feedback end -->
 <!-- feedback -->
 ## Does this example address your development requirements/objectives?
 
@@ -82,3 +76,4 @@ void ShowCustomScrollAnnotation(ScrollBarCustomRowAnnotationEventArgs e, SolidCo
 
 (you will be redirected to DevExpress.com to submit your response)
 <!-- feedback end -->
+
